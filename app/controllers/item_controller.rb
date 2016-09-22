@@ -5,20 +5,19 @@ class ItemController < ApplicationController
   end
 
   def show
-    chosen_product = Product.find(params[:id])
-    render json: chosen_product
+    @chosen_product = Product.find(params[:id])
+    render json: @chosen_product
   end
 
   def new
-    newProduct = Product.new(product_params)
-    newProduct.save
-    render json: newProduct
+    @new_product = Product.new(product_params)
+    @new_product.save
+    render json: @new_product
   end
 
-  # def edit
-  #   chosen_product = Product.find(params[:id])
-  #
-  # end
+  def edit
+    @product = Product.find(params[:id])
+  end
 
   def delete
     Product.find(params[:id]).destroy
