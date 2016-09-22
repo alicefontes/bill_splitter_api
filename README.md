@@ -25,8 +25,6 @@ Product:
 * quantity
 * number_of_people_sharing
 
-Ruby version: 2.3.0
-Rails version: 5.0.0
-MongoDB shell version: 3.2.9
+Ruby version: 2.3.0 | Rails version: 5.0.0 | MongoDB shell version: 3.2.9
 
 You can use the plugin "Advanced REST client" to make it easier to run the routes.
