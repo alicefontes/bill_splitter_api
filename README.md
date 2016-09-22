@@ -10,20 +10,20 @@ Things you can request:
 * Show a list of all products registered
 
 This should respect the following:
-Show: GET /item/<id>
-List: GET /items
-New: POST /items
-Edit: PUT /item/<id>
-Delete: DELETE /item/<id>
+* Show: GET /item/<id>
+* List: GET /items
+* New: POST /items
+* Edit: PUT /item/<id>
+* Delete: DELETE /item/<id>
 
 A product needs to have specified price and quantity (useful if you are using the application alone), and may also have quantity and number of people sharing the product.
 
 Product:
--id
--name
--price
--quantity
--number_of_people_sharing
+* id
+* name
+* price
+* quantity
+* number_of_people_sharing
 
 Ruby version: 2.3.0
 Rails version: 5.0.0
