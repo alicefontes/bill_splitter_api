@@ -1,24 +1,32 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+API for the bill splitter project.
 
-Things you may want to cover:
+Things you can request:
+* Show the details of a specific item
+* Edit a product
+* Delete a product
+* Include a new product
+* Show a list of all products registered
 
-* Ruby version
+This should respect the following:
+Show: GET /item/<id>
+List: GET /items
+New: POST /items
+Edit: PUT /item/<id>
+Delete: DELETE /item/<id>
 
-* System dependencies
+A product needs to have specified price and quantity (useful if you are using the application alone), and may also have quantity and number of people sharing the product.
 
-* Configuration
+Product:
+-id
+-name
+-price
+-quantity
+-number_of_people_sharing
 
-* Database creation
+Ruby version: 2.3.0
+Rails version: 5.0.0
+MongoDB shell version: 3.2.9
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+You can use the plugin "Advanced REST client" to make it easier to run the routes.
