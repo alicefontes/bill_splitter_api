@@ -9,16 +9,16 @@ describe ProductController, type: :controller do
 			end
 		end
 
-    describe "show" do
-      it "tudo ok?" do
-
-        # @chosen_product = Product.find(params[:id])
-        get :show, params: {:id => @chosen_product.id}
-        # get :show, params: {id: "57e4563e00d4f842afcf5533"}, session: {product_id: "57e4563e00d4f842afcf5533"}
-        # expect(page.current_path).to eq(item.id)
-        expect(response.status).to eq(200)
-      end
-    end
+    # describe "show" do
+    #   it "tudo ok?" do
+    #
+    #     # @chosen_product = Product.find(params[:id])
+    #     get :show, self.find(params[:id])
+    #     #  params: {:id => Product.find(params[:id])}
+    #     # expect(page.current_path).to eq(item.id)
+    #     expect(response.status).to eq(200)
+    #   end
+    # end
 
     # describe "edit" do
     #   it "tudo ok?" do
@@ -30,6 +30,16 @@ describe ProductController, type: :controller do
     describe "new" do
       it "tudo ok?" do
         post :new, params: { :item => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
+        expect(response.status).to eq(200)
+      end
+
+      it "blank name of the item" do
+        post :new, params: { :item => nil, :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
+        expect(response.status).to eq(200)
+      end
+
+      it "blank number of people sharing" do
+        post :new, params: { :item => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => nil }
         expect(response.status).to eq(200)
       end
     end
