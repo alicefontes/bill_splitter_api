@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-    get '/items', to: 'item#index'
-    get '/item/:id', to: 'item#show'
-    put '/item/:id', to: 'item#edit'
-    post '/items', to: 'item#new'
-    delete '/item/:id', to: 'item#delete'
+    get '/items', to: 'product#index'
+    get '/item/:id', to: 'product#show'
+    put '/item/:id', to: 'product#edit'
+    post '/items', to: 'product#new'
+    delete '/item/:id', to: 'product#delete'
 end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe ItemController, type: :controller do
+describe ProductController, type: :controller do
 
 		describe "index" do
 			it "tudo ok?" do
