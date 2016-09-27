@@ -9,12 +9,16 @@ describe ItemController, type: :controller do
 			end
 		end
 
-    # describe "show" do
-    #   it "tudo ok?" do
-    #     get :show
-    #     expect(response.status).to eq(200)
-    #   end
-    # end
+    describe "show" do
+      it "tudo ok?" do
+
+        # @chosen_product = Product.find(params[:id])
+        get :show, params: {:id => @chosen_product.id}
+        # get :show, params: {id: "57e4563e00d4f842afcf5533"}, session: {product_id: "57e4563e00d4f842afcf5533"}
+        # expect(page.current_path).to eq(item.id)
+        expect(response.status).to eq(200)
+      end
+    end
 
     # describe "edit" do
     #   it "tudo ok?" do
@@ -29,7 +33,7 @@ describe ItemController, type: :controller do
         expect(response.status).to eq(200)
       end
     end
-    
+
     # describe "delete" do
     #   it "tudo ok?" do
     #     delete :delete

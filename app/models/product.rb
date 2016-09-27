@@ -1,5 +1,6 @@
 class Product
   include Mongoid::Document
+  field :id
   field :name, type: String
   field :price, type: Float
   field :quantity, type: Integer

@@ -27,6 +27,6 @@ class ItemController < ApplicationController
   def product_params
     params.require(:price)
     params.require(:quantity)
-    params.permit(:name, :price, :quantity, :number_of_people_sharing)
+    params.permit(:id, :name, :price, :quantity, :number_of_people_sharing)
   end
 end
