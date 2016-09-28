@@ -18,7 +18,7 @@ describe ProductController, type: :controller do
       end
 
       it "tudo ok2?" do
-        produto_fake = instance_double("Product", :id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2)
+        produto_fake = instance_double("Product")
         allow(Product).to receive(:find).with("30") { produto_fake }
         get :show, params: { :id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
         expect(assigns(:chosen_product)).to eq(produto_fake)
