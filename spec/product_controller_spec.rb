@@ -9,17 +9,21 @@ describe ProductController, type: :controller do
 			end
 		end
 
-    # describe "show" do
-    #   it "tudo ok?" do
-    #
-    #     # @chosen_product = Product.find(params[:id])
-    #     get :show, self.find(params[:id])
-    #     #  params: {:id => Product.find(params[:id])}
-    #     # expect(page.current_path).to eq(item.id)
-    #     expect(response.status).to eq(200)
-    #   end
-    # end
+    describe "show" do
+      it "tudo ok?" do
+        allow(Product).to receive(:find).with("30") { "ok" }
 
+        get :show, params: { :id => 30 }
+        expect(response.status).to eq(200)
+      end
+
+      it "tudo ok2?" do
+        produto_fake = instance_double("Product", :id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2)
+        allow(Product).to receive(:find).with("30") { produto_fake }
+        get :show, params: { :id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
+        expect(assigns(:chosen_product)).to eq(produto_fake)
+      end
+    end
     # describe "edit" do
     #   it "tudo ok?" do
     #     put :edit
@@ -28,6 +32,7 @@ describe ProductController, type: :controller do
     # end
 
     describe "new" do
+
       it "tudo ok?" do
         post :new, params: { :item => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
         expect(response.status).to eq(200)
