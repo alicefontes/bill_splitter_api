@@ -26,14 +26,14 @@ describe ProductController, type: :controller do
 
     describe "edit" do
       it "tudo ok?" do
-        allow(Product).to receive(:find).with("30") { "ok" }
+        produto_fake = instance_double("Product", :id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2)
+        allow(Product).to receive(:find).with("30") { produto_fake }
         put :edit, params: { :id => 30 }
-        expect(response.status).to eq(204)
+        expect(response.status).to eq(200)
       end
     end
 
     describe "new" do
-
       it "tudo ok?" do
         post :new, params: { :item => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
         expect(response.status).to eq(200)
@@ -50,12 +50,13 @@ describe ProductController, type: :controller do
       end
     end
 
-    # describe "delete" do
-    #   it "tudo ok?" do
-    #     produto_fake = instance_double("Product", :id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2)
-    #     allow(Product).to receive(:find).with("30") { produto_fake }
-    #     delete :delete, params: { :id => 30 }
-    #     expect(response.status).to eq(200)
-    #   end
-    # end
+    describe "delete" do
+      it "tudo ok?" do
+        produto_fake = instance_double("Product", :id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2)
+        allow(Product).to receive(:find).with("30") { produto_fake }
+        expect(produto_fake).to receive(:destroy)
+        delete :delete, params: { :id => 30 }
+        expect(response.status).to eq(200)
+      end
+    end
 end
