@@ -33,17 +33,41 @@ describe ProductController, type: :controller do
         expect(response.status).to eq(200)
       end
 
+      # it "salva os parametros novos?" do
+      #   produto_fake = instance_double("Product", :name= => "batata", :quantity= => 2, :price= => 20, :number_of_people_sharing= => 2)
+      #   allow(Product).to receive(:find).with("30") { produto_fake }
+      #   allow(produto_fake).to receive(:save)
+      #   expect(produto_fake).to receive(:name=).with("batata")
+      #   expect(produto_fake).to receive(:quantity=).with("2")
+      #   expect(produto_fake).to receive(:price=).with("20")
+      #   expect(produto_fake).to receive(:number_of_people_sharing=).with("2")
+      #   put :edit, params: { :id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
+      #   expect(response.status).to eq(200)
+      # end
+
       it "salva os parametros novos?" do
-        produto_fake = instance_double("Product", :name= => "batata", :quantity= => 2, :price= => 20, :number_of_people_sharing= => 2)
-        allow(Product).to receive(:find).with("30") { produto_fake }
-        allow(produto_fake).to receive(:save)
-        expect(produto_fake).to receive(:name=).with("batata")
-        expect(produto_fake).to receive(:quantity=).with("2")
-        expect(produto_fake).to receive(:price=).with("20")
-        expect(produto_fake).to receive(:number_of_people_sharing=).with("2")
+        product = Product.new(:id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2)
+        allow(Product).to receive(:find).with("30") { product }
+        allow(product).to receive(:save)
+
+        expect(product).to receive(:name=).with("batata")
+        expect(product).to receive(:quantity=).with("2")
+        expect(product).to receive(:price=).with("20")
+        expect(product).to receive(:number_of_people_sharing=).with("2")
         put :edit, params: { :id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
         expect(response.status).to eq(200)
       end
+      # 
+      # it "salva só um parametro novo?" do
+      #   product = Product.new(:id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2)
+      #
+      #   allow(Product).to receive(:find).with("30") { product }
+      #   allow(product).to receive(:save)
+      #
+      #   put :edit, params: { :id => 30, :name => "outra batata" }
+      #   expect(assigns(:product_edited).name).to eq("outra batata")
+      #   expect(assigns(:product_edited).quantity).to eq(2)
+      # end
     end
 
     describe "new" do
