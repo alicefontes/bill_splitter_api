@@ -18,16 +18,16 @@ class ProductController < ApplicationController
   def edit
     @product_edited = Product.find(params[:id])
     # @product_edited.update_attributes(params[:name], params[:price], params[:quantity], params[:number_of_people_sharing])
-    if params[:name]
+    unless params[:name].nil?
       @product_edited.name = params[:name]
     end
-    if params[:price]
+    unless params[:price].nil?
       @product_edited.price = params[:price]
     end
-    if params[:quantity]
+    unless params[:quantity].nil?
       @product_edited.quantity = params[:quantity]
     end
-    if params[:number_of_people_sharing]
+    unless params[:number_of_people_sharing].nil?
       @product_edited.number_of_people_sharing = params[:number_of_people_sharing]
     end
     @product_edited.save
