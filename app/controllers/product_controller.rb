@@ -17,20 +17,16 @@ class ProductController < ApplicationController
 
   def edit
     @product_edited = Product.find(params[:id])
-    # @product_edited.update_attributes(params[:name], params[:price], params[:quantity], params[:number_of_people_sharing])
-    unless params[:name].nil?
-      @product_edited.name = params[:name]
-    end
-    unless params[:price].nil?
-      @product_edited.price = params[:price]
-    end
-    unless params[:quantity].nil?
-      @product_edited.quantity = params[:quantity]
-    end
-    unless params[:number_of_people_sharing].nil?
-      @product_edited.number_of_people_sharing = params[:number_of_people_sharing]
-    end
-    @product_edited.save
+
+    attributes = {
+      :name => params[:name],
+      :price => params[:price],
+      :quantity => params[:quantity],
+      :number_of_people_sharing => params[:number_of_people_sharing]
+    }
+    attributes = attributes.delete_if { |_,v| v.nil? }
+
+    @product_edited.update(attributes)
     render json: @product_edited
   end
 
