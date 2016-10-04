@@ -57,17 +57,17 @@ describe ProductController, type: :controller do
         put :edit, params: { :id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
         expect(response.status).to eq(200)
       end
-      # 
-      # it "salva só um parametro novo?" do
-      #   product = Product.new(:id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2)
-      #
-      #   allow(Product).to receive(:find).with("30") { product }
-      #   allow(product).to receive(:save)
-      #
-      #   put :edit, params: { :id => 30, :name => "outra batata" }
-      #   expect(assigns(:product_edited).name).to eq("outra batata")
-      #   expect(assigns(:product_edited).quantity).to eq(2)
-      # end
+      
+      it "salva só um parametro novo?" do
+        product = Product.new(:id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2)
+
+        allow(Product).to receive(:find).with("30") { product }
+        allow(product).to receive(:save)
+
+        put :edit, params: { :id => 30, :name => "outra batata" }
+        expect(assigns(:product_edited).name).to eq("outra batata")
+        expect(assigns(:product_edited).quantity).to eq(2)
+      end
     end
 
     describe "new" do
