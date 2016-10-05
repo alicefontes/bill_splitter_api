@@ -6,21 +6,21 @@ describe ProductController, type: :controller do
     Product.delete_all
   end
 
-	describe "index" do
-		it "tudo ok?" do
+	describe "index option" do
+		it "has 200 status code if requested" do
 			get :index
 			expect(response.status).to eq(200)
 		end
 	end
 
-  describe "show" do
-    it "tudo ok?" do
+  describe "show option" do
+    it "has 200 status code if requested" do
       allow(Product).to receive(:find).with("30") { "ok" }
       get :show, params: { :id => 30 }
       expect(response.status).to eq(200)
     end
 
-    it "tudo ok2?" do
+    it "shows the chosen product properly" do
       produto_fake = instance_double("Product")
 
       allow(Product).to receive(:find).with("30") { produto_fake }
@@ -30,18 +30,18 @@ describe ProductController, type: :controller do
     end
   end
 
-  describe "edit" do
+  describe "edit option" do
     before do
       product = Product.new(:id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2)
       allow(Product).to receive(:find).with("30") { product }
     end
 
-    it "tudo ok?" do
+    it "has 200 status code if requested" do
       put :edit, params: { :id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
       expect(response.status).to eq(200)
     end
 
-    it "salva os parametros novos?" do
+    it "save the new parameters" do
       put :edit, params: { :id => 30, :name => "batata 2", :quantity => 3, :price => 30, :number_of_people_sharing => 3 }
 
       expect(assigns(:product_edited).name).to eq("batata 2")
@@ -49,8 +49,9 @@ describe ProductController, type: :controller do
       expect(assigns(:product_edited).price).to eq(30)
       expect(assigns(:product_edited).number_of_people_sharing).to eq(3)
     end
+    #deveria separar os expects mesmo nesse caso?
 
-    it "salva só um parametro novo?" do
+    it "save only one new parameter and keep the rest" do
       put :edit, params: { :id => 30, :name => "outra batata" }
 
       expect(assigns(:product_edited).name).to eq("outra batata")
@@ -58,25 +59,25 @@ describe ProductController, type: :controller do
     end
   end
 
-  describe "new" do
-    it "tudo ok?" do
+  describe "new option" do
+    it "has 200 status code when requested" do
       post :new, params: { :item => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
       expect(response.status).to eq(200)
     end
 
-    it "blank name of the item" do
+    it "has 200 status code w/ blank name of the item" do
       post :new, params: { :item => nil, :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
       expect(response.status).to eq(200)
     end
 
-    it "blank number of people sharing" do
+    it "has 200 status code w/ blank number of people sharing" do
       post :new, params: { :item => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => nil }
       expect(response.status).to eq(200)
     end
   end
 
-  describe "delete" do
-    it "tudo ok?" do
+  describe "delete option" do
+    it "has 200 status code w/ id passed" do
       produto_fake = instance_double("Product", :id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2)
 
       allow(Product).to receive(:find).with("30") { produto_fake }
