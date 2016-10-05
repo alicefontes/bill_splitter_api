@@ -21,12 +21,12 @@ describe ProductController, type: :controller do
     end
 
     it "shows the chosen product properly" do
-      produto_fake = instance_double("Product")
+      fake_product = instance_double("Product")
 
-      allow(Product).to receive(:find).with("30") { produto_fake }
+      allow(Product).to receive(:find).with("30") { fake_product }
 
       get :show, params: { :id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
-      expect(assigns(:chosen_product)).to eq(produto_fake)
+      expect(assigns(:chosen_product)).to eq(fake_product)
     end
   end
 
@@ -78,10 +78,10 @@ describe ProductController, type: :controller do
 
   describe "delete option" do
     it "has 200 status code w/ id passed" do
-      produto_fake = instance_double("Product", :id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2)
+      fake_product = instance_double("Product", :id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2)
 
-      allow(Product).to receive(:find).with("30") { produto_fake }
-      expect(produto_fake).to receive(:destroy)
+      allow(Product).to receive(:find).with("30") { fake_product }
+      expect(fake_product).to receive(:destroy)
 
       delete :delete, params: { :id => 30 }
       expect(response.status).to eq(200)
