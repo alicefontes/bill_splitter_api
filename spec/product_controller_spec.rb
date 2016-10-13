@@ -56,6 +56,16 @@ describe ProductController, type: :controller do
       expect(assigns(:product_edited).name).to eq("outra batata")
       expect(assigns(:product_edited).quantity).to eq(2)
     end
+
+    it "error > name of the product bigger than 20 char" do
+      post :new, params: { :name => "batata frita com cheddar e bacon nao interessa", :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
+      expect(response.status).to eq(400)
+    end
+
+    it "error > number of people sharing cant be 0" do
+      post :new, params: { :name => "batata frita", :quantity => 2, :price => 20, :number_of_people_sharing => 0 }
+      expect(response.status).to eq(400)
+    end
   end
 
   describe "new option" do
