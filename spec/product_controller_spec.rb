@@ -7,24 +7,36 @@ describe ProductController, type: :controller do
   end
 
 	describe "index option" do
-		it "has 200 status code if requested" do
-			get :index
-			expect(response.status).to eq(200)
+    subject do
+      response.status
+    end
+
+    before do
+      get :index
+    end
+
+    context "has 200 status code if requested" do
+			it { is_expected.to eq 200 }
 		end
 	end
 
   describe "show option" do
-    it "has 200 status code if requested" do
+    subject do
+      response.status
+    end
+
+    before do
       allow(Product).to receive(:find).with("30") { "ok" }
       get :show, params: { :id => 30 }
-      expect(response.status).to eq(200)
+    end
+
+    context "has 200 status code if requested" do
+      it { is_expected.to eq 200 }
     end
 
     it "shows the chosen product properly" do
       fake_product = instance_double("Product")
-
       allow(Product).to receive(:find).with("30") { fake_product }
-
       get :show, params: { id: 30, name: "batata", quantity: 2, price: 20, number_of_people_sharing: 2 }
       expect(assigns(:chosen_product)).to eq(fake_product)
     end
