@@ -21,7 +21,7 @@ class ProductController < ApplicationController
 
   def edit
     @product_edited = Product.find(params[:id])
-
+    
     attributes = {
       :name => params[:name],
       :price => params[:price],

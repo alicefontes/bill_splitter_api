@@ -25,24 +25,24 @@ describe ProductController, type: :controller do
 
       allow(Product).to receive(:find).with("30") { fake_product }
 
-      get :show, params: { :id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
+      get :show, params: { id: 30, name: "batata", quantity: 2, price: 20, number_of_people_sharing: 2 }
       expect(assigns(:chosen_product)).to eq(fake_product)
     end
   end
 
   describe "edit option" do
     before do
-      product = Product.new(:id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2)
+      product = Product.new(id: 30, name: "batata", quantity: 2, price: 20, number_of_people_sharing: 2)
       allow(Product).to receive(:find).with("30") { product }
     end
 
     it "has 200 status code if requested" do
-      put :edit, params: { :id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
+      put :edit, params: { id: 30, name: "batata", quantity: 2, price: 20, number_of_people_sharing: 2 }
       expect(response.status).to eq(200)
     end
 
     it "save the new parameters" do
-      put :edit, params: { :id => 30, :name => "batata 2", :quantity => 3, :price => 30, :number_of_people_sharing => 3 }
+      put :edit, params: { id: 30, name: "batata 2", quantity: 3, price: 30, number_of_people_sharing: 3 }
 
       expect(assigns(:product_edited).name).to eq("batata 2")
       expect(assigns(:product_edited).quantity).to eq(3)
@@ -51,42 +51,53 @@ describe ProductController, type: :controller do
     end
 
     it "save only one new parameter and keep the rest" do
-      put :edit, params: { :id => 30, :name => "outra batata" }
+      put :edit, params: { id: 30, name: "outra batata" }
 
       expect(assigns(:product_edited).name).to eq("outra batata")
       expect(assigns(:product_edited).quantity).to eq(2)
     end
 
     it "error > name of the product bigger than 20 char" do
-      post :new, params: { :name => "batata frita com cheddar e bacon nao interessa", :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
+      post :new, params: { name: "batata frita com cheddar e bacon nao interessa", quantity: 2, price: 20, number_of_people_sharing: 2 }
       expect(response.status).to eq(400)
     end
 
     it "error > number of people sharing cant be 0" do
-      post :new, params: { :name => "batata frita", :quantity => 2, :price => 20, :number_of_people_sharing => 0 }
+      post :new, params: { name: "batata frita", quantity: 2, price: 20, number_of_people_sharing: 0 }
       expect(response.status).to eq(400)
     end
   end
 
   describe "new option" do
-    it "has 200 status code when requested" do
-      post :new, params: { :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
-      expect(response.status).to eq(200)
+    subject do
+      response.status
     end
 
-    it "has 200 status code w/ blank name of the item" do
-      post :new, params: { :name => nil, :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
-      expect(response.status).to eq(200)
+    let(:number_of_people_sharing) { 2 }
+
+    before do
+      post :new, params: { name: name, quantity: 2, price: 20, number_of_people_sharing: number_of_people_sharing }
     end
 
-    it "error > name of the product bigger than 20 char" do
-      post :new, params: { :name => "batata frita com cheddar e bacon nao interessa", :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
-      expect(response.status).to eq(400)
+    context "has 200 status code when requested" do
+      let(:name) { "batata" }
+      it { is_expected.to eq 200 }
     end
 
-    it "error > number of people sharing cant be 0" do
-      post :new, params: { :name => "batata frita", :quantity => 2, :price => 20, :number_of_people_sharing => 0 }
-      expect(response.status).to eq(400)
+    context "has 200 status code w/ blank name of the item" do
+      let(:name) { nil }
+      it { is_expected.to eq 200 }
+    end
+
+    context "error > name of the product bigger than 20 char" do
+      let(:name) { "batata frita com cheddar e bacon nao interessa" }
+      it { is_expected.to eq 400 }
+    end
+
+    context "error > number of people sharing cant be 0" do
+      let(:name) { "batata frita" }
+      let(:number_of_people_sharing) { 0 }
+      it { is_expected.to eq 400 }
     end
 
   end
