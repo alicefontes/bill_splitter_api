@@ -31,7 +31,13 @@ class ProductController < ApplicationController
     attributes = attributes
 
     @product_edited.update(attributes)
-    render json: @product_edited
+
+    if @product_edited.valid?
+      @product_edited.save
+      render json: @product_edited
+    else
+      render json: @product_edited.errors, status: 400
+    end
   end
 
   def delete
