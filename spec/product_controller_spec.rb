@@ -49,7 +49,6 @@ describe ProductController, type: :controller do
       expect(assigns(:product_edited).price).to eq(30)
       expect(assigns(:product_edited).number_of_people_sharing).to eq(3)
     end
-    #deveria separar os expects mesmo nesse caso?
 
     it "save only one new parameter and keep the rest" do
       put :edit, params: { :id => 30, :name => "outra batata" }
@@ -61,19 +60,25 @@ describe ProductController, type: :controller do
 
   describe "new option" do
     it "has 200 status code when requested" do
-      post :new, params: { :item => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
+      post :new, params: { :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
       expect(response.status).to eq(200)
     end
 
     it "has 200 status code w/ blank name of the item" do
-      post :new, params: { :item => nil, :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
+      post :new, params: { :name => nil, :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
       expect(response.status).to eq(200)
     end
 
     it "has 200 status code w/ blank number of people sharing" do
-      post :new, params: { :item => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => nil }
+      post :new, params: { :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => nil }
       expect(response.status).to eq(200)
     end
+
+    it "error > name of the product bigger than 20 char" do
+      post :new, params: { :name => "batata frita com cheddar e bacon nao interessa", :quantity => 2, :price => 20, :number_of_people_sharing => 2 }
+      expect(response.status).to eq(400)
+    end
+
   end
 
   describe "delete option" do

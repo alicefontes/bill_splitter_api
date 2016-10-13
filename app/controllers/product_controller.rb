@@ -11,8 +11,12 @@ class ProductController < ApplicationController
 
   def new
     @new_product = Product.new(product_params)
-    @new_product.save
-    render json: @new_product
+    if @new_product.valid?
+      @new_product.save
+      render json: @new_product
+    else
+      render json: @new_product.errors, status: 400
+    end
   end
 
   def edit
@@ -23,8 +27,8 @@ class ProductController < ApplicationController
       :price => params[:price],
       :quantity => params[:quantity],
       :number_of_people_sharing => params[:number_of_people_sharing]
-    }
-    attributes = attributes.delete_if { |_,v| v.nil? }
+    }.delete_if { |_,v| v.nil? }
+    attributes = attributes
 
     @product_edited.update(attributes)
     render json: @product_edited
