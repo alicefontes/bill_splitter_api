@@ -7,9 +7,7 @@ describe ProductController, type: :controller do
   end
 
 	describe "index option" do
-    subject do
-      response.status
-    end
+    subject { response.status }
 
     before do
       get :index
@@ -21,9 +19,7 @@ describe ProductController, type: :controller do
 	end
 
   describe "show option" do
-    subject do
-      response.status
-    end
+    subject { response.status }
 
     before do
       product = Product.new(id: 30, name: "batata", quantity: 2, price: 20, number_of_people_sharing: 2)
@@ -44,9 +40,7 @@ describe ProductController, type: :controller do
   end
 
   describe "edit option" do
-    subject do
-      response.status
-    end
+    subject { response.status }
 
     let(:name) { "batata" }
     let(:quantity) { 2 }
@@ -95,9 +89,7 @@ describe ProductController, type: :controller do
   end
 
   describe "new option" do
-    subject do
-      response.status
-    end
+    subject { response.status }
 
     let(:number_of_people_sharing) { 2 }
 
@@ -129,9 +121,7 @@ describe ProductController, type: :controller do
   end
 
   describe "delete option" do
-    subject do
-      response.status
-    end
+    subject { response.status }
 
     before do
       fake_product = instance_double("Product", :id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2)
