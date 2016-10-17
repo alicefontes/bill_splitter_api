@@ -28,7 +28,6 @@ class ProductController < ApplicationController
       quantity: params[:quantity],
       number_of_people_sharing: params[:number_of_people_sharing]
     }.delete_if { |_,v| v.nil? }
-    attributes = attributes
 
     @product_edited.update(attributes)
 
