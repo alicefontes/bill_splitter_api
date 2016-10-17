@@ -44,7 +44,6 @@ describe ProductController, type: :controller do
   end
 
   describe "edit option" do
-
     subject do
       response.status
     end

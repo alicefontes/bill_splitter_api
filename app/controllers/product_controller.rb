@@ -21,12 +21,12 @@ class ProductController < ApplicationController
 
   def edit
     @product_edited = Product.find(params[:id])
-    
+
     attributes = {
-      :name => params[:name],
-      :price => params[:price],
-      :quantity => params[:quantity],
-      :number_of_people_sharing => params[:number_of_people_sharing]
+      name: params[:name],
+      price: params[:price],
+      quantity: params[:quantity],
+      number_of_people_sharing: params[:number_of_people_sharing]
     }.delete_if { |_,v| v.nil? }
     attributes = attributes
 
