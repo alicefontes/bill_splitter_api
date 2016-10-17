@@ -26,19 +26,20 @@ describe ProductController, type: :controller do
     end
 
     before do
-      allow(Product).to receive(:find).with("30") { "ok" }
-      get :show, params: { :id => 30 }
+      product = Product.new(id: 30, name: "batata", quantity: 2, price: 20, number_of_people_sharing: 2)
+      allow(Product).to receive(:find).with("30") { product }
+      get :show, params: { id: 30, name: "batata", quantity: 2, price: 20, number_of_people_sharing: 2 }
     end
 
     context "has 200 status code if requested" do
       it { is_expected.to eq 200 }
     end
 
-    it "shows the chosen product properly" do
-      fake_product = instance_double("Product")
-      allow(Product).to receive(:find).with("30") { fake_product }
-      get :show, params: { id: 30, name: "batata", quantity: 2, price: 20, number_of_people_sharing: 2 }
-      expect(assigns(:chosen_product)).to eq(fake_product)
+    context "shows the chosen product properly" do
+      it { expect(assigns(:chosen_product).name).to eq("batata") }
+      it { expect(assigns(:chosen_product).quantity).to eq(2) }
+      it { expect(assigns(:chosen_product).price).to eq(20) }
+      it { expect(assigns(:chosen_product).number_of_people_sharing).to eq(2) }
     end
   end
 
