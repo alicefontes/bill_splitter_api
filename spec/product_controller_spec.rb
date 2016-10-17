@@ -6,11 +6,11 @@ describe ProductController, type: :controller do
     Product.delete_all
   end
 
-	describe "index option" do
+	describe "list option" do
     subject { response.status }
 
     before do
-      get :index
+      get :list
     end
 
     context "has 200 status code if requested" do

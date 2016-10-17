@@ -1,5 +1,5 @@
 class ProductController < ApplicationController
-  def index
+  def list
     @products = Product.all
     render json: @products
   end
