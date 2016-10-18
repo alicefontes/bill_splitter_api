@@ -21,15 +21,7 @@ class ProductController < ApplicationController
 
   def edit
     @product_edited = Product.find(params[:id])
-
-    attributes = {
-      name: params[:name],
-      price: params[:price],
-      quantity: params[:quantity],
-      number_of_people_sharing: params[:number_of_people_sharing]
-    }.delete_if { |_,v| v.nil? }
-
-    @product_edited.update(attributes)
+    @product_edited.update(product_params)
 
     if @product_edited.valid?
       @product_edited.save
@@ -45,9 +37,6 @@ class ProductController < ApplicationController
   end
 
   def product_params
-    params.require(:price)
-    params.require(:quantity)
-    params.require(:number_of_people_sharing)
     params.permit(:id, :name, :price, :quantity, :number_of_people_sharing)
   end
 end
