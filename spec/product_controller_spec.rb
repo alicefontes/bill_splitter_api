@@ -6,7 +6,7 @@ describe ProductController, type: :controller do
     Product.delete_all
   end
 
-	describe "list option" do
+	describe "GET list" do
     subject { response.status }
 
     before do
@@ -18,7 +18,7 @@ describe ProductController, type: :controller do
 		end
 	end
 
-  describe "show option" do
+  describe "GET show" do
     subject { response.status }
 
     before do
@@ -31,6 +31,7 @@ describe ProductController, type: :controller do
       it { is_expected.to eq 200 }
     end
 
+#corrigir: ver se o json retorna os parametros certos
     context "shows the chosen product properly" do
       it { expect(assigns(:chosen_product).name).to eq("batata") }
       it { expect(assigns(:chosen_product).quantity).to eq(2) }
@@ -39,7 +40,7 @@ describe ProductController, type: :controller do
     end
   end
 
-  describe "edit option" do
+  describe "PUT edit" do
     subject { response.status }
 
     let(:name) { "batata" }
@@ -75,26 +76,13 @@ describe ProductController, type: :controller do
       it { expect(assigns(:product_edited).name).to eq("outra batata") }
       it { expect(assigns(:product_edited).quantity).to eq(2) }
     end
-
-    context "error > name of the product bigger than 20 char" do
-      let(:name) { "batata frita com cheddar e bacon nao interessa" }
-      it { is_expected.to eq 400 }
-    end
-
-    context "error > number of people sharing cant be 0" do
-      let(:name) { "batata frita" }
-      let(:number_of_people_sharing) { 0 }
-      it { is_expected.to eq 400 }
-    end
   end
 
-  describe "new option" do
+  describe "POST new" do
     subject { response.status }
 
-    let(:number_of_people_sharing) { 2 }
-
     before do
-      post :new, params: { name: name, quantity: 2, price: 20, number_of_people_sharing: number_of_people_sharing }
+      post :new, params: { name: name, quantity: 2, price: 20, number_of_people_sharing: 2 }
     end
 
     context "has 200 status code when requested" do
@@ -106,28 +94,16 @@ describe ProductController, type: :controller do
       let(:name) { nil }
       it { is_expected.to eq 200 }
     end
-
-    context "error > name of the product bigger than 20 char" do
-      let(:name) { "batata frita com cheddar e bacon nao interessa" }
-      it { is_expected.to eq 400 }
-    end
-
-    context "error > number of people sharing cant be 0" do
-      let(:name) { "batata frita" }
-      let(:number_of_people_sharing) { 0 }
-      it { is_expected.to eq 400 }
-    end
-
   end
 
-  describe "delete option" do
+  describe "DELETE delete" do
     subject { response.status }
 
     before do
       fake_product = instance_double("Product", :id => 30, :name => "batata", :quantity => 2, :price => 20, :number_of_people_sharing => 2)
       allow(Product).to receive(:find).with("30") { fake_product }
       expect(fake_product).to receive(:destroy)
-      delete :delete, params: { :id => 30 }
+      delete :delete, params: { id: 30 }
     end
 
     context "has 200 status code w/ id passed" do

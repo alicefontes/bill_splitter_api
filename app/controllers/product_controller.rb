@@ -11,8 +11,7 @@ class ProductController < ApplicationController
 
   def new
     @new_product = Product.new(product_params)
-    if @new_product.valid?
-      @new_product.save
+    if @new_product.save!
       render json: @new_product
     else
       render json: @new_product.errors, status: 400
@@ -23,8 +22,7 @@ class ProductController < ApplicationController
     @product_edited = Product.find(params[:id])
     @product_edited.update(product_params)
 
-    if @product_edited.valid?
-      @product_edited.save
+    if @product_edited.save!
       render json: @product_edited
     else
       render json: @product_edited.errors, status: 400
@@ -33,7 +31,7 @@ class ProductController < ApplicationController
 
   def delete
     Product.find(params[:id]).destroy
-    render json: @products
+    render json: nil, status: :ok
   end
 
   def product_params
