@@ -6,7 +6,7 @@ describe ProductController, type: :controller do
     Product.delete_all
   end
 
-	describe "GET list" do
+	describe "GET #list" do
     subject { response.status }
 
     before do
@@ -18,14 +18,16 @@ describe ProductController, type: :controller do
 		end
 	end
 
-  describe "GET show" do
+  describe "GET #show" do
     subject { response.status }
 
     before do
       product = Product.new(id: 30, name: "batata", quantity: 2, price: 20, number_of_people_sharing: 2)
       allow(Product).to receive(:find).with("30") { product }
-      get :show, params: { id: 30, name: "batata", quantity: 2, price: 20, number_of_people_sharing: 2 }
+      get :show, params: { id: id, name: "batata", quantity: 2, price: 20, number_of_people_sharing: 2 }
     end
+
+    let (:id) { 30 }
 
     context "has 200 status code if requested" do
       it { is_expected.to eq 200 }
@@ -41,9 +43,14 @@ describe ProductController, type: :controller do
         expect(json['number_of_people_sharing']).to eq(2)
       end
     end
+###############
+    context "has 400 status code if bad requested" do
+      let (:id) { 40 }
+      it { expect(response).to raise_error }
+    end
   end
 
-  describe "PUT edit" do
+  describe "PUT #edit" do
     subject { response.status }
 
     let(:name) { "batata" }
@@ -87,7 +94,7 @@ describe ProductController, type: :controller do
     end
   end
 
-  describe "POST new" do
+  describe "POST #new" do
     subject { response.status }
 
     before do
@@ -105,7 +112,7 @@ describe ProductController, type: :controller do
     end
   end
 
-  describe "DELETE delete" do
+  describe "DELETE #delete" do
     subject { response.status }
 
     before do
