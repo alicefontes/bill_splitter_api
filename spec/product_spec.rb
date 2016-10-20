@@ -10,22 +10,22 @@ describe Product, type: :model do
     subject { Product.new(id: 10, name: name, quantity: 2, price: 20, number_of_people_sharing: 2) }
 
     context "long name" do
-      let(:name) { "nome graaaaaaaaaaaaaaaaaaaaaaaande" }
-      it "should not be vallid" do
+      let(:name) { "a" * 21 }
+      it "should not be valid" do
         expect(subject).to_not be_valid
       end
     end
 
     context "short name" do
       let(:name) { "short name" }
-      it "should be vallid" do
+      it "should be valid" do
         expect(subject).to be_valid
       end
     end
 
     context "nil name" do
       let(:name) { nil }
-      it "should be vallid" do
+      it "should be valid" do
         expect(subject).to be_valid
       end
     end
@@ -36,14 +36,14 @@ describe Product, type: :model do
 
     context "no price" do
       let(:price) { nil }
-      it "should not be vallid" do
+      it "should not be valid" do
         expect(subject).to_not be_valid
       end
     end
 
     context "ok price" do
       let(:price) { 30 }
-      it "should be vallid" do
+      it "should be valid" do
         expect(subject).to be_valid
       end
     end
@@ -54,14 +54,14 @@ describe Product, type: :model do
 
     context "no quantity" do
       let(:quantity) { nil }
-      it "should not be vallid" do
+      it "should not be valid" do
         expect(subject).to_not be_valid
       end
     end
 
     context "ok quantity" do
       let(:quantity) { 30 }
-      it "should be vallid" do
+      it "should be valid" do
         expect(subject).to be_valid
       end
     end
@@ -79,7 +79,7 @@ describe Product, type: :model do
 
     context "number_of_people_sharing ok" do
       let(:number_of_people_sharing) { 30 }
-      it "should be vallid" do
+      it "should be valid" do
         expect(subject).to be_valid
       end
     end

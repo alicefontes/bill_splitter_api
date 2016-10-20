@@ -31,12 +31,15 @@ describe ProductController, type: :controller do
       it { is_expected.to eq 200 }
     end
 
-#corrigir: ver se o json retorna os parametros certos
-    context "shows the chosen product properly" do
-      it { expect(assigns(:chosen_product).name).to eq("batata") }
-      it { expect(assigns(:chosen_product).quantity).to eq(2) }
-      it { expect(assigns(:chosen_product).price).to eq(20) }
-      it { expect(assigns(:chosen_product).number_of_people_sharing).to eq(2) }
+    context "saved right?" do
+      it "should be valid" do
+        json = JSON.parse(response.body)
+        expect(json['id']).to eq(30)
+        expect(json['name']).to eq("batata")
+        expect(json['quantity']).to eq(2)
+        expect(json['price']).to eq(20)
+        expect(json['number_of_people_sharing']).to eq(2)
+      end
     end
   end
 
@@ -64,17 +67,23 @@ describe ProductController, type: :controller do
       let(:price) { 30 }
       let(:number_of_people_sharing) { 3 }
 
-      it { expect(assigns(:product_edited).name).to eq("batata 2") }
-      it { expect(assigns(:product_edited).quantity).to eq(3) }
-      it { expect(assigns(:product_edited).price).to eq(30) }
-      it { expect(assigns(:product_edited).number_of_people_sharing).to eq(3) }
+      it "should be valid" do
+        json = JSON.parse(response.body)
+        expect(json['name']).to eq("batata 2")
+        expect(json['quantity']).to eq(3)
+        expect(json['price']).to eq(30)
+        expect(json['number_of_people_sharing']).to eq(3)
+      end
     end
 
     context "save only one new parameter and keep the rest" do
       let(:name) { "outra batata" }
 
-      it { expect(assigns(:product_edited).name).to eq("outra batata") }
-      it { expect(assigns(:product_edited).quantity).to eq(2) }
+      it "should be valid" do
+        json = JSON.parse(response.body)
+        expect(json['name']).to eq("outra batata")
+        expect(json['quantity']).to eq(2)
+      end
     end
   end
 
@@ -108,6 +117,24 @@ describe ProductController, type: :controller do
 
     context "has 200 status code w/ id passed" do
       it { is_expected.to eq 200 }
+    end
+  end
+
+  describe "validates json response" do
+    before do
+      product = Product.new(id: 30, name: "batata", quantity: 2, price: 20, number_of_people_sharing: 2)
+      allow(Product).to receive(:find).with("30") { product }
+      get :show, params: { id: 30, name: "batata", quantity: 2, price: 20, number_of_people_sharing: 2 }
+    end
+    context "saved right?" do
+      it "should be valid" do
+        json = JSON.parse(response.body)
+        expect(json['id']).to eq(30)
+        expect(json['name']).to eq("batata")
+        expect(json['quantity']).to eq(2)
+        expect(json['price']).to eq(20)
+        expect(json['number_of_people_sharing']).to eq(2)
+      end
     end
   end
 end
